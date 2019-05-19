@@ -14,7 +14,8 @@ import java.util.List;
 
 /**
  * Created by 王超
- * 2017-06-18 23:41
+    2019 05 19
+
  */
 @Slf4j
 public class OrderForm2OrderDTOConverter {
@@ -22,12 +23,14 @@ public class OrderForm2OrderDTOConverter {
     public static OrderDTO convert(OrderForm orderForm) {
         Gson gson = new Gson();
         OrderDTO orderDTO = new OrderDTO();
+
         orderDTO.setBuyerName(orderForm.getName());
         orderDTO.setBuyerPhone(orderForm.getPhone());
         orderDTO.setBuyerAddress(orderForm.getAddress());
         orderDTO.setBuyerOpenid(orderForm.getOpenid());
 
         List<OrderDetail> orderDetailList = new ArrayList<>();
+        //将json传来的items转换为List<OrderDetail>  使用谷歌公司的gson
         try {
             orderDetailList = gson.fromJson(orderForm.getItems(),
                     new TypeToken<List<OrderDetail>>() {

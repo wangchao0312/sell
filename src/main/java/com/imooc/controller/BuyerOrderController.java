@@ -36,6 +36,7 @@ public class BuyerOrderController {
     //创建订单
     //@Vaild 为表单验证类
     //使用@Valid注解验证数据，并且使用BindingResult获取结果。
+    @PostMapping("/create")//Post请求 postman发送
     public ResultVO<Map<String, String>> create(@Valid OrderForm orderForm,
                                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -60,7 +61,21 @@ public class BuyerOrderController {
     }
 
     //订单列表
+    //订单列表
+    @GetMapping("/list")
+    public ResultVO<List<OrderDTO>> list(@RequestParam("openid") String openid,
+                                         @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                         @RequestParam(value = "size", defaultValue = "10") Integer size) {
 
+        if(StringUtils.isEmpty(openid)){
+            log.error("【查询订单列表】openid为空");
+            throw new SellException(ResultEnum.PARAM_ERROR);
+        }
+        PageRequest request=new PageRequest(page,size);
+        Page<OrderDTO> orderDTOPage=orderService.findList(openid,request);
+        return ResultVOUtil.success(orderDTOPage.getContent());
+
+    }
 
     //订单详情
 

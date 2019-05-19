@@ -8,9 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by 王超
- * 2019 05 18
- * 转换器 将orderMaster对象 转成orderDTO对象
+ * Created by 廖师兄
+ * 2017-06-11 22:02
  */
 public class OrderMaster2OrderDTOConverter {
 
