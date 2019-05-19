@@ -1,5 +1,7 @@
 package com.imooc.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.imooc.dataobject.OrderDetail;
 import com.imooc.utils.serializer.Date2LongSerializer;
@@ -15,7 +17,8 @@ import java.util.List;
  */
 @Data
 //@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-//@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)//当有些数据项为空的时候 就不返回了，不返回null值字段
+//加了全局注解
 public class OrderDTO {
 
     /** 订单id. */
@@ -42,7 +45,8 @@ public class OrderDTO {
     /** 支付状态, 默认为0未支付. */
     private Integer payStatus;
 
-    /** 创建时间. */
+    /** 创建时间.
+     * 将日期数据转换为long型或者转换为其他的数据类型*/
     @JsonSerialize(using = Date2LongSerializer.class)
     private Date createTime;
 
@@ -51,7 +55,4 @@ public class OrderDTO {
     private Date updateTime;
     //订单的详情
     List<OrderDetail> orderDetailList;
-
-
-
 }

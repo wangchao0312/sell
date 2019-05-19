@@ -17,7 +17,9 @@ public class Date2LongSerializer extends JsonSerializer<Date> {
 
     @Override
     public void serialize(Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
-        //jsonGenerator.writeNumber(date.getTime() / 1000);
+        //jsonGenerator.writeNumber(date.getTime() / 1000);//转换为秒
+
+        //转化为日期格式
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM-dd-yyyy");
         jsonGenerator.writeString(simpleDateFormat.format(date));
     }

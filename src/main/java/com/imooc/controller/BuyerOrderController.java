@@ -5,6 +5,7 @@ import com.imooc.dto.OrderDTO;
 import com.imooc.enums.ResultEnum;
 import com.imooc.exception.SellException;
 import com.imooc.form.OrderForm;
+import com.imooc.service.BuyerService;
 import com.imooc.service.OrderService;
 import com.imooc.utils.ResultVOUtil;
 import converter.OrderForm2OrderDTOConverter;
@@ -33,6 +34,9 @@ public class BuyerOrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private BuyerService buyerService;
     //创建订单
     //@Vaild 为表单验证类
     //使用@Valid注解验证数据，并且使用BindingResult获取结果。
@@ -78,7 +82,22 @@ public class BuyerOrderController {
     }
 
     //订单详情
-
+    //订单详情
+    @GetMapping("/detail")
+    public ResultVO<OrderDTO> detail(@RequestParam("openid") String openid,
+                                     @RequestParam("orderId") String orderId) {
+        //添加一个service层 来判断订单的openid和 传过来的openid是否相等  相等的话继续操作 否则抛出异常
+        OrderDTO orderDTO=buyerService.findOrderOne(openid,orderId);
+        return ResultVOUtil.success(orderDTO);
+    }
 
     //取消订单
+    //取消订单
+    @PostMapping("/cancel")
+    public ResultVO cancel(@RequestParam("openid") String openid,
+                           @RequestParam("orderId") String orderId) {
+
+        OrderDTO orderDTO=buyerService.cancelOrder(openid,orderId);
+        return ResultVOUtil.success();
+    }
 }
